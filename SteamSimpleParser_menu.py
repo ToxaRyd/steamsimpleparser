@@ -14,9 +14,9 @@
 import json, time, requests
 import random
 from prettytable import PrettyTable
+from datetime import datetime
 
-
-
+#Капсулы
 urls1 = [
 ['2018-Boston-Returning', 'Boston%202018%20Returning%20Challengers%20Autograph%20Capsule', 29, 8.11], 
 ['2019-Katowice-Legends', 'Katowice%202019%20Legends%20Autograph%20Capsule', 3, 6],
@@ -25,7 +25,7 @@ urls1 = [
 ['2019-Berlin-Legends', 'Berlin%202019%20Legends%20Autograph%20Capsule', 30, 6],
 ['2019-Berlin-Returning', 'Berlin%202019%20Returning%20Challengers%20Autograph%20Capsule', 13, 6],
 ]
-
+#Агенты
 urls2 = [
 ['\'The Doctor\' Romanov', '%27The%20Doctor%27%20Romanov%20%7C%20Sabre', 4, 115], 
 ['3rd Commando Company', '3rd%20Commando%20Company%20%7C%20KSK', 1, 58], 
@@ -36,19 +36,22 @@ urls2 = [
 ['Ground Rebel', 'Ground%20Rebel%20%20%7C%20Elite%20Crew', 7, 9],
 ['Soldier', 'Soldier%20%7C%20Phoenix', 5, 9.40],
 ]
-
+#Стикеры
 urls3 = [
 ['Sticker Combine Helmet', 'Sticker%20%7C%20Combine%20Helmet', 35, 6],
 ['Sticker Holo Combine Helmet', 'Sticker%20%7C%20Combine%20Helmet%20%28Holo%29', 3, 20.33],
 ]
-
+#Новые стволы
 urls4 = [
 ['P250 X-RAY', 'P250%20%7C%20X-Ray%20%28Factory%20New%29', 1, 13.62],
 ['USP FlashBack', 'USP-S%20%7C%20Flashback%20%28Factory%20New%29', 1, 33.23],
-['USP Cyrex', 'USP-S%20%7C%20Cyrex%20%28Minimal%20Wear%29', 1, 58.94],
 ['AWP Phobos', 'AWP%20%7C%20Phobos%20%28Factory%20New%29', 1, 48],
 ]
-
+#Новые стикеры
+urls5 = [
+['Sticker Ancient Protector', 'Sticker%20%7C%20Ancient%20Protector', 50, 3.45],
+['Sticker Ancient Marauder', 'Sticker%20%7C%20Ancient%20Marauder', 50, 3.45],
+]
 x = PrettyTable()
 x.field_names = ['Название предмета', 'Кол-во', 'Покупка', 'Текущая', 'Прибыль ед.', 'Сумма', 'Прибыль']
 
@@ -84,6 +87,7 @@ def main(urls):
 				curr += (price/price_usd)
 				c += 1
 
+		print(f'\n{datetime.now()}'[0:16])
 		print(x)
 		print(f'\n Цена всех предметов с вычетом комиссии Steam: ₴{round(overall, 2)} или ${round((overall/curr), 2)}\n')
 		print(f' Потрачено суммарно на закупку: ₴{round(payed, 2)} или ${round((payed/curr), 2)}')
@@ -98,7 +102,7 @@ def main(urls):
 		input('Отсутсвует интернет!')
 
 def sub():
-	a = input('Выбор группы предметов: \n  1. Капсулы \n  2. Агенты \n  3. Стикеры \n  4. Стволы последние \n  5. Все вместе \n Введите номер группы: ')
+	a = input('Выбор группы предметов: \n  1. Капсулы \n  2. Агенты \n  3. Стикеры \n  4. Новые стволы \n  5. Новые стикеры \n  6. Все вместе \n Введите номер группы: ')
 	if int(a) == 1:
 		main(urls1)
 	elif int(a) == 2:
@@ -108,7 +112,9 @@ def sub():
 	elif int(a) == 4:
 		main(urls4)
 	elif int(a) == 5:
-		main((urls1 + urls2 + urls3 + urls4))
+		main(urls5)
+	elif int(a) == 6:
+		main((urls1 + urls2 + urls3 + urls4 + urls5))
 	else:
 		print('\nНеверно задан номер группы!\n')
 		sub()
