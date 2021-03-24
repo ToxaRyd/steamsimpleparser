@@ -1,14 +1,10 @@
 """
 Эта программа написана для определения стоимости некоторых вещей из торговой площадки Steam по минимальной рыночной цене продажи предмета.
-
 Для добавления интересующих вас предметов следуйте аналогии: ['Название предмета (как вам угодно)', 'его индивидуальная ссылка на ТП Steam', 'Количество (обязательно укажите!)', 'Цена закупки']
 После, внесите этот список параметров в список списков 'urls'
-
 Обратите внимание, что если вы хотите добавить вещь из другой игры (текущая программа для CS-GO 'appid=730') вам необходимо указать номер игры в переменной 'appid'!
 Программа предусмотрена для работы с одним appid в текущий момент!
-
 Обратите внимание, что маркет определяет комиссию для каждой игры отдельно (комиссия игры + площадки Steam). На примере CS-GO комиссия указана в переменной 'comission'!
-
 Также, обратите внимание, что при слишком частых запросах с одного IP, STEAM их блокирует, поэтому если программу часто лишают доступа, уменьшите список вещей или подождите!
 """
 import json, time, requests
@@ -38,20 +34,15 @@ urls2 = [
 ]
 #Стикеры
 urls3 = [
-['Sticker Combine Helmet', 'Sticker%20%7C%20Combine%20Helmet', 35, 6],
-['Sticker Holo Combine Helmet', 'Sticker%20%7C%20Combine%20Helmet%20%28Holo%29', 3, 20.33],
+['Sticker Ancient Protector', 'Sticker%20%7C%20Ancient%20Protector', 100, 3.45],
+['Sticker Ancient Marauder', 'Sticker%20%7C%20Ancient%20Marauder', 100, 3.45],
+['Sticker PP-19 Bizon', 'Sticker%20%7C%20Hello%20PP-Bizon', 30, 3.25],
+['Sticker P90', 'Sticker%20%7C%20Hello%20P90', 25, 3.25],
+['Sticker Coiled', 'Sticker%20%7C%20Coiled%20Strike', 11, 3.85],
+['Sticker Stone Scales', 'Sticker%20%7C%20Stone%20Scales', 7, 3.1],
+['Sticker Enemy Spotted', 'Sticker%20%7C%20Enemy%20Spotted', 6, 3.85],
 ]
-#Новые стволы
-urls4 = [
-['P250 X-RAY', 'P250%20%7C%20X-Ray%20%28Factory%20New%29', 1, 13.62],
-['USP FlashBack', 'USP-S%20%7C%20Flashback%20%28Factory%20New%29', 1, 33.23],
-['AWP Phobos', 'AWP%20%7C%20Phobos%20%28Factory%20New%29', 1, 48],
-]
-#Новые стикеры
-urls5 = [
-['Sticker Ancient Protector', 'Sticker%20%7C%20Ancient%20Protector', 50, 3.45],
-['Sticker Ancient Marauder', 'Sticker%20%7C%20Ancient%20Marauder', 50, 3.45],
-]
+
 x = PrettyTable()
 x.field_names = ['Название предмета', 'Кол-во', 'Покупка', 'Текущая', 'Прибыль ед.', 'Сумма', 'Прибыль']
 
@@ -102,7 +93,7 @@ def main(urls):
 		input('Отсутсвует интернет!')
 
 def sub():
-	a = input('Выбор группы предметов: \n  1. Капсулы \n  2. Агенты \n  3. Стикеры \n  4. Новые стволы \n  5. Новые стикеры \n  6. Все вместе \n Введите номер группы: ')
+	a = input('Выбор группы предметов: \n  1. Капсулы \n  2. Агенты \n  3. Стикеры \n  4. Все вместе \n Введите номер группы: ')
 	if int(a) == 1:
 		main(urls1)
 	elif int(a) == 2:
@@ -110,11 +101,7 @@ def sub():
 	elif int(a) == 3:
 		main(urls3)
 	elif int(a) == 4:
-		main(urls4)
-	elif int(a) == 5:
-		main(urls5)
-	elif int(a) == 6:
-		main((urls1 + urls2 + urls3 + urls4 + urls5))
+		main((urls1 + urls2 + urls3))
 	else:
 		print('\nНеверно задан номер группы!\n')
 		sub()
