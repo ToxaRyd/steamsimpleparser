@@ -23,16 +23,11 @@ urls1 = [
 ]
 #Агенты
 urls2 = [
-['\'The Doctor\' Romanov', '%27The%20Doctor%27%20Romanov%20%7C%20Sabre', 4, 115], 
-['3rd Commando Company', '3rd%20Commando%20Company%20%7C%20KSK', 1, 58], 
-['Seal Team 6 Soldier', 'Seal%20Team%206%20Soldier%20%7C%20NSWC%20SEAL', 2, 44], 
-['Slingshot', 'Slingshot%20%7C%20Phoenix', 2, 15.40], 
+['\'The Doctor\' Romanov', '%27The%20Doctor%27%20Romanov%20%7C%20Sabre', 3, 115],
 ['Prof. Shahmat', 'Prof.%20Shahmat%20%7C%20Elite%20Crew', 3, 15.25],
 ['Osiris', 'Osiris%20%7C%20Elite%20Crew', 2, 12.26],
-['Ground Rebel', 'Ground%20Rebel%20%20%7C%20Elite%20Crew', 7, 9],
-['Soldier', 'Soldier%20%7C%20Phoenix', 5, 9.40],
 ]
-#Стикеры
+#Стикеры разные
 urls3 = [
 ['Sticker Ancient Protector', 'Sticker%20%7C%20Ancient%20Protector', 100, 3.45],
 ['Sticker Ancient Marauder', 'Sticker%20%7C%20Ancient%20Marauder', 100, 3.45],
@@ -42,13 +37,22 @@ urls3 = [
 ['Sticker Stone Scales', 'Sticker%20%7C%20Stone%20Scales', 7, 3.1],
 ['Sticker Enemy Spotted', 'Sticker%20%7C%20Enemy%20Spotted', 6, 3.85],
 ]
+#Стикеры RMR2020
+urls4 = [
+['Sticker GodSent 2020', 'Sticker%20%7C%20GODSENT%20%7C%202020%20RMR', 20, 1.05],
+['Sticker FaZe 2020', 'Sticker%20%7C%20FaZe%20%7C%202020%20RMR', 20, 1.45],
+['Sticker Heroic HOLO 2020', 'Sticker%20%7C%20Heroic%20%28Holo%29%20%7C%202020%20RMR', 7, 1.9],
+['Sticker ESPADA 2020', 'Sticker%20%7C%20ESPADA%20%7C%202020%20RMR', 100, 0.43],
+['Sticker Renegades 2020', 'Sticker%20%7C%20Renegades%20%7C%202020%20RMR', 100, 0.48],
+['Sticker Natus Vincere 2020', 'Sticker%20%7C%20Natus%20Vincere%20%7C%202020%20RMR', 15, 3.36],
+]
 
 x = PrettyTable()
 x.field_names = ['Название предмета', 'Кол-во', 'Покупка', 'Текущая', 'Прибыль ед.', 'Сумма', 'Прибыль']
 
 def main(urls):
+	print('\nИдет парсинг...')
 	headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'}
-
 	appid = 730
 	comission = 0.869584416
 	overall = 0
@@ -66,9 +70,12 @@ def main(urls):
 				payed += i[2]*i[3]
 
 				x.add_row([i[0], i[2], i[3], price, round(price - i[3], 2), round(i[2]*price, 2), round((i[2]*price)-(i[2]*i[3]), 2)])
-
+				print('...')
 				time.sleep(random.randint(5, 10))
 			except KeyError:
+				print('Проверены не все предметы, т.к. стим не дает доступ в связи со слишком частыми запросами!\n')
+				break
+			except TypeError:
 				print('Проверены не все предметы, т.к. стим не дает доступ в связи со слишком частыми запросами!\n')
 				break
 			while c < 1:
@@ -78,22 +85,22 @@ def main(urls):
 				curr += (price/price_usd)
 				c += 1
 
-		print(f'\n{datetime.now()}'[0:16])
+		print(f'\n{datetime.now()}'[0:17])
 		print(x)
-		print(f'\n Цена всех предметов с вычетом комиссии Steam: ₴{round(overall, 2)} или ${round((overall/curr), 2)}\n')
-		print(f' Потрачено суммарно на закупку: ₴{round(payed, 2)} или ${round((payed/curr), 2)}')
-		print(f' Чистая прибыль с вычетом комиссии Steam: ₴{round(overall-payed, 2)} или ${round(((overall-payed)/curr), 2)}')
+		print(f'\n Цена всех предметов с вычетом комиссии Steam: {round(overall, 2)}₴ или {round((overall/curr), 2)}$\n')
+		print(f' Потрачено суммарно на закупку: {round(payed, 2)}₴ или {round((payed/curr), 2)}$')
+		print(f' Чистая прибыль с вычетом комиссии Steam: {round(overall-payed, 2)}₴ или {round(((overall-payed)/curr), 2)}$')
 		print(f' Коеффициент приумножения капитала: X{round(overall/payed, 2)}')
-		print(f' Внутренний курс доллара: ₴{round(curr, 2)}')
+		print(f' Внутренний курс доллара: {round(curr, 2)}₴')
 		input('\n Нажмите ENTER чтобы выйти!')
 
 	except TypeError:
-		input('Steam отказал в доступе программе!')
+		input('Steam отказал в доступе программе! ::: TypeError')
 	except BaseException:
-		input('Отсутсвует интернет!')
+		input('Отсутсвует интернет! ::: BaseException')
 
 def sub():
-	a = input('Выбор группы предметов: \n  1. Капсулы \n  2. Агенты \n  3. Стикеры \n  4. Все вместе \n Введите номер группы: ')
+	a = input('Выбор группы предметов: \n  1. Капсулы \n  2. Агенты \n  3. Стикеры разные \n  4. Стикеры RMR2020 \n  5. Все вместе \n Введите номер группы: ')
 	if int(a) == 1:
 		main(urls1)
 	elif int(a) == 2:
@@ -101,7 +108,9 @@ def sub():
 	elif int(a) == 3:
 		main(urls3)
 	elif int(a) == 4:
-		main((urls1 + urls2 + urls3))
+		main(urls4)
+	elif int(a) == 5:
+		main(urls1 + urls2 + urls3 + urls4)
 	else:
 		print('\nНеверно задан номер группы!\n')
 		sub()
